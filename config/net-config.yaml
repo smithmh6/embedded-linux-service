@@ -1,0 +1,34 @@
+# This is the network config written by 'subiquity'
+#network:
+#  ethernets:
+#    enp1s0:
+#      dhcp4: true
+#    enp2s0:
+#      dhcp4: true
+#  version: 2
+
+# this is the template for setting static IP's
+# copy to /etc/netplan/00-installer-config.yaml
+network:
+  ethernets:
+    # ethernet #1
+    enp1s0:
+      dhcp4: false
+      addresses:
+        - 10.59.5.75/24
+      routes:
+        - to: default
+          via: 10.59.5.1
+      nameservers:
+        addresses: [10.50.5.10, 10.50.6.44]
+    # ethernet #2
+    enp2s0:
+      dhcp4: false
+      addresses:
+        - 10.59.5.75/24
+      routes:
+        - to: default
+          via: 10.59.5.1
+      nameservers:
+        addresses: [10.50.5.10, 10.50.6.44]
+  version: 2

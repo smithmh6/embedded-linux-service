@@ -1,0 +1,12 @@
+[Unit]
+Description=Thorlabs Optical Engine
+After=network-online.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=30
+ExecStart=/usr/local/bin/optical-engine
+
+[Install]
+WantedBy=multi-user.target

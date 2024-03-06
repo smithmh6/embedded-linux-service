@@ -1,0 +1,43 @@
+
+#$PWD = /home/tsw/
+
+# need to change path to use /etc/ instead of home
+#docker run -d --name=influxdb -v /etc/influxdb/data:/var/lib/influxdb2 -v /etc/influxdb/config:/etc/influxdb2 --net=host influxdb:2.0
+
+#docker run -d --name=telegraf -v /etc/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro --net host --restart always telegraf
+
+#docker run -d --name=grafana --net=host grafana/grafana  -v /etc/grafana:/var/lib/grafana
+
+version: "3.1"
+
+services:
+
+  influxdb:
+    image: influxdb:2.0
+    container_name: influxdb
+    network_mode: "host"
+    restart: always
+    volumes:
+      - /var/lib/influxdb2:/var/lib/influxdb2
+      - /etc/influxdb2:/etc/influxdb2
+
+  telegraf:
+    image: telegraf:latest
+    container_name: telegraf
+    network_mode: "host"
+    restart: always
+    depends_on:
+      - influxdb
+    volumes:
+      - /etc/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    network_mode: "host"
+    restart: always
+    depends_on:
+      - influxdb
+      - telegraf
+    volumes:
+      - /var/lib/grafana:/var/lib/grafana
